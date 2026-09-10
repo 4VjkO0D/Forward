@@ -13,6 +13,26 @@ without trying to do everything at once.
 Everything is stored **on your device** in `localStorage`. There is no account, no server,
 and it keeps working with no connection once installed.
 
+## "I opened `index.html` and it's blank!"
+
+That's expected, not a bug. The root `index.html` is a **source** file — it points at
+`src/main.tsx`, which is TypeScript + JSX that browsers can't run until Vite compiles it.
+Opening it directly over `file://` gives an empty page, and browsers also refuse to load
+`file://` *module scripts*, so `dist/index.html` is blank when double-clicked too.
+
+Pick whichever you need:
+
+| I want to… | Run | Then open |
+| --- | --- | --- |
+| develop, see changes as I edit | `npm run dev` | http://localhost:5173 |
+| **a single file I can just double-click** | `npm run build:portable` | `Forward.html` |
+| install it as a real PWA (offline, icon) | `npm run build && npm run preview` | the printed URL |
+
+`npm run build:portable` produces a self-contained `Forward.html` (JS + CSS inlined) in the
+project root. Chrome/Edge run it straight from disk and `localStorage` works there, so your
+progress is kept. The only thing it can't do is register a service worker — for
+install/offline use the `preview` route.
+
 ## Getting started
 
 ```bash
@@ -23,10 +43,11 @@ npm run dev        # http://localhost:5173
 Other scripts:
 
 ```bash
-npm run build      # type-check + production build into dist/
-npm run preview    # serve the built app (use this to check the PWA/offline bits)
-npm test           # run the unit + UI tests
-npm run icons      # regenerate the PWA icons in public/icons/
+npm run build           # type-check + production build into dist/
+npm run build:portable  # one self-contained, double-clickable Forward.html
+npm run preview         # serve the built app (use this to check the PWA/offline bits)
+npm test                # run the unit + UI tests
+npm run icons           # regenerate the PWA icons in public/icons/
 ```
 
 ## Installing it as an app
