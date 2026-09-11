@@ -1,23 +1,86 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="utf-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
     />
     <meta name="theme-color" content="#0b0d12" />
-    <meta name="description" content="Move forward on the areas of life that matter, one small goal at a time." />
+    <meta
+      name="description"
+      content="Move forward on the areas of life that matter, one small goal at a time."
+    />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="Forward" />
-    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
-    <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="stylesheet" href="styles.css" />
+
     <title>Forward</title>
   </head>
+
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <div class="app">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-name">Forward</span>
+          <span class="brand-tag">one step at a time</span>
+        </div>
+        <button type="button" class="btn btn-primary" data-action="new-page">+ Page</button>
+      </header>
+
+      <!-- Pages are rendered here. Swipe left / right to move between them. -->
+      <main id="deck" class="deck"></main>
+
+      <nav id="dots" class="dots" aria-label="Pages"></nav>
+    </div>
+
+    <!-- "New page" dialog -->
+    <div id="modal" class="modal-backdrop" hidden>
+      <div class="modal" role="dialog" aria-modal="true" aria-label="New page">
+        <div class="modal-head">
+          <h2>New page</h2>
+          <button type="button" class="icon-btn ghost" data-action="close-modal" aria-label="Close">
+            ✕
+          </button>
+        </div>
+
+        <label class="field">
+          <span>Which area of life is this?</span>
+          <input
+            id="modal-name"
+            class="input"
+            type="text"
+            placeholder="Health, School, Money…"
+            autocomplete="off"
+          />
+        </label>
+
+        <div class="field">
+          <span>Colour</span>
+          <div id="modal-swatches" class="swatches"></div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn" data-action="close-modal">Cancel</button>
+          <button type="button" class="btn btn-primary" data-action="create-page">
+            Create page
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <noscript>
+      <p style="padding: 24px; color: #e8ecf4; font-family: sans-serif">
+        Please enable JavaScript in your browser to use Forward.
+      </p>
+    </noscript>
+
+    <script src="app.js"></script>
   </body>
 </html>

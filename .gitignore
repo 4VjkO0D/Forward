@@ -1,9 +1,6 @@
 node_modules
-dist
-dev-dist
-Forward.html
+react-version/node_modules
+react-version/dist
 .DS_Store
 *.local
 *.log
-.vite
-coverage
