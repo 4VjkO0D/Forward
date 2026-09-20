@@ -377,19 +377,40 @@
     return -1;
   }
 
-  /** Reach a goal (green) or take it back off if you didn't hold the level. */
+  /**
+   * Goals on a road are cumulative — they are levels, not a checklist.
+   *
+   *   tap the 4th  ->  1st, 2nd, 3rd and 4th all turn green
+   *   untap the 2nd -> 2nd, 3rd, 4th … all go grey again
+   *
+   * Reaching only ever *adds* the goals before it, and letting go only ever
+   * *removes* the goals after it — so it never invents a level you didn't reach.
+   */
   function toggleStepDone(categoryId, roadId, stepId) {
     var r = getRoad(categoryId, roadId);
     if (!r) return;
-    var i = indexOfId(r.steps, stepId);
-    if (i < 0) return;
-    var item = r.steps[i];
-    item.done = !item.done;
-    if (item.done) {
-      item.doneAt = new Date().toISOString();
-    } else {
-      delete item.doneAt;
-    }
+
+    var at = indexOfId(r.steps, stepId);
+    if (at < 0) return;
+
+    var reaching = !r.steps[at].done;
+    var now = new Date().toISOString();
+
+    r.steps.forEach(function (item, index) {
+      if (reaching) {
+        // You've reached this level: everything up to it comes with it.
+        if (index <= at && !item.done) {
+          item.done = true;
+          item.doneAt = now;
+        }
+      } else {
+        // You've dropped back to this level: everything above it goes.
+        if (index >= at && item.done) {
+          item.done = false;
+          delete item.doneAt;
+        }
+      }
+    });
   }
 
   function moveStepItem(categoryId, roadId, stepId, direction) {

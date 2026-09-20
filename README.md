@@ -22,8 +22,10 @@ straight from your disk.
   them, tap the dots at the bottom, or press ← / →.
 - Each page holds one or more **roads** — the path you want to take.
 - A road is an ordered list of **small goals** ("Walk 30 min").
-- **Tap a goal and it turns green.** Tap it again if you didn't hold that level and it goes
-  grey again — the record stays honest.
+- **Goals are cumulative levels, not a checklist.** Tapping the **4th** goal turns goals
+  1–4 green, because reaching one goal means you've reached everything before it.
+  Tapping the **2nd** goal *off* greys out the 2nd, 3rd, 4th … — dropping back a level gives
+  up everything above it. So a road always shows one honest "you are here" point.
 - **+ Add road** / **+ Add goal** build things out. **✎** renames, **↑ ↓** reorders,
   **✕** / **🗑** delete.
 
